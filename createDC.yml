@@ -1,0 +1,14 @@
+---
+- name: vSphere datacenter Manage
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: vSphere Datacenter Manage
+      vmware_datacenter:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        datacenter_name: DC2
+        state: present
+        validate_certs: False
+      delegate_to: localhost
