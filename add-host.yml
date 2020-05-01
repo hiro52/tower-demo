@@ -1,6 +1,6 @@
 - name: Add or Remove ESXi host and Release the Maintenance Mode
   hosts: all
-  gather_facts: no
+#  gather_facts: no
   tasks:
     - name: Add or Remove ESXi host to/from vCenterServer
       vmware_host:
