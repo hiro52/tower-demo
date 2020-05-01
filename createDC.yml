@@ -9,6 +9,6 @@
 #        username: "{{lookup('env', 'VMWARE_USER')}}"
 #        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
         datacenter_name: DC2
-        state: absent
+        state: present
         validate_certs: False
       delegate_to: localhost
