@@ -13,7 +13,7 @@
         esxi_hostname: "{{esxi_host}}"
         esxi_username: "{{esxi_user}}"
         esxi_password: "{{esxi_pass}}"
-        state: present
+        state: absent
       delegate_to: localhost
 #    - name: Manage Maintenance Mode
 #      local_action:
