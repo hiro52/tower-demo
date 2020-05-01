@@ -24,4 +24,4 @@
         username: "{{lookup('env', 'VMWARE_USER')}}"
         password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
         state: absent
-      when: esxi_state == "present"
+#      when: esxi_state == "present"
