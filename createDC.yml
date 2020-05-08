@@ -8,7 +8,7 @@
         hostname: "{{lookup('env', 'VMWARE_HOST')}}"
         username: "{{lookup('env', 'VMWARE_USER')}}"
         password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
-        datacenter_name: DC2
+        datacenter_name: "{{dc_name}}"
         state: "{{dc_state}}"
         validate_certs: False
       delegate_to: localhost
