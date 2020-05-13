@@ -1,0 +1,64 @@
+---
+- name: Get VM Tag
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Show VM Tag
+      vmware_guest_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        datacenter: DC
+        name: "{{ansible_nodename}}"
+#        name: "{{vmname}}{{item}}"
+        tags: yes
+#      delegate_to: localhost
+      register: vm_facts
+#      tags: test3
+#      with_sequence: count={{number}}
+      delegate_to: localhost
+#    - debug:
+#        var: vm_facts.instance.tags
+#        var: vm_facts
+
+    - name: httpd install & Firewall (80/443) config
+      yum: 
+        name: httpd
+        state: latest
+      when: vm_facts.instance.tags == ["New_VM"]
+
+#    - debug:
+#        var: vm_facts.results[0].instance.tags
+#        var: vm_facts.results[{{item}}].instance.tags
+#      run_once: true
+#      with_sequence: count={{number}} start=0 
+#      tag: test2
+
+    - name: httpd running & Enabled
+      service: 
+        name: httpd
+        state: started
+        enabled: yes
+      when: vm_facts.instance.tags == ["New_VM"]
+
+    - name: Firewall Setting 80
+      firewalld:
+        service: "{{item}}"
+        zone: public 
+        state: enabled
+        permanent: true 
+        immediate: true
+      with_items:
+        - http
+        - https 
+      when: vm_facts.instance.tags == ["New_VM"]
+
+#    - name: Firewall Setting 443
+#      firewalld:
+#        service: https
+#        zone: public
+#        state: enabled
+#        permanent: true
+#        immediate: true
+#      when: vm_facts.instance.tags == ["New_VM"]

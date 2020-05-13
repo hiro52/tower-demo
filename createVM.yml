@@ -1,0 +1,45 @@
+---
+- name: Create a VM from a template
+  hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: Clone the Template
+    vmware_guest:
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      datacenter: DC
+      cluster: CL
+      name: "{{vmname}}{{item}}"
+      folder: /DC/vm
+      template: "{{template}}"
+      networks:
+      - name: VM Network
+        type: dhcp
+      state: poweredon
+      datastore: NFS
+      validate_certs: no
+      customization:
+        dns_servers: 192.168.21.11 
+    with_sequence: count={{number|int - 1}}
+
+  - name: Clone the Template with wait for customization
+    vmware_guest:
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      datacenter: DC
+      cluster: CL
+      name: "{{vmname}}{{number}}"
+      folder: /DC/vm
+      template: "{{template}}"
+      networks:
+      - name: VM Network
+        type: dhcp
+      state: poweredon
+      datastore: NFS
+      validate_certs: no
+      customization:
+        dns_servers: 192.168.21.11 
+      wait_for_ip_address: yes
+#      wait_for_customization: yes

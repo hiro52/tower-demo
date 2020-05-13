@@ -1,0 +1,15 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Create Cluster
+      vmware_cluster:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        datacenter_name: "{{dc_name}}"
+        cluster_name: "{{cluster_name}}"
+#        enable_ha: "{{ha}}"
+#        enable_drs: "{{drs}}"
+#        enable_vsan: "{{vsan}}"
+        state: "{{cluster_state}}"

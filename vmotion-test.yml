@@ -1,0 +1,14 @@
+---
+- name: Config check with vMotion
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Test vMotion after ESXi Config
+    vmware_vmotion:
+      validate_certs: False
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      vm_name: testvm
+      destination_host: "{{esxi_host}}"
+    delegate_to: localhost

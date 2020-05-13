@@ -1,0 +1,17 @@
+---
+- name: Manage VSS
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Standard Switch Config
+    vmware_vswitch:
+      esxi_hostname: "{{esxi_host}}"
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      validate_certs: no
+      switch: "{{vss_name}}"
+      nics: "{{vmnic_name}}"
+      mtu: 1500
+      state: "{{vss_state}}"
+    delegate_to: localhost

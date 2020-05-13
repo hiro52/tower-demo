@@ -1,0 +1,21 @@
+---
+- name: Test Connect to New Web Server
+  hosts: all
+#  gather_facts: no
+  gather_facts: yes
+  tasks:
+    - name: Show VM Tag
+      vmware_guest_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        datacenter: DC
+        name: "{{ansible_nodename}}"
+        tags: yes
+      register: vm_facts
+      delegate_to: localhost
+
+    - name: Test http Access
+      command: curl http://localhost/
+      when: vm_facts.instance.tags == ["New_VM"]

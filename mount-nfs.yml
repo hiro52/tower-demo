@@ -1,0 +1,42 @@
+# This Playbook requires Ansible 2.5 or later, would not work with 2.4.x
+#
+---
+- name: Manage Datastore for ESXi
+  hosts: all
+#  gather_facts: no
+  tasks:
+  - name: Manage Maintenance Mode
+    local_action:
+      module: vmware_maintenancemode
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      validate_certs: False
+      esxi_hostname: "{{esxi_host}}"
+      evacuate: yes
+      state: present
+    when: nfs_state == "absent"
+  - name: Manage NFS Datastore
+    vmware_host_datastore:
+      esxi_hostname: "{{esxi_host}}"
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      datastore_name: NFS
+#      datastore_name: "{{nfs_name}}"
+      datastore_type: nfs
+      nfs_path: "{{nfs_path}}"
+      nfs_server: "{{nfs_server}}"
+      state: "{{nfs_state}}"
+      validate_certs: no
+    delegate_to: localhost
+  - name: Manage Maintenance Mode
+    local_action:
+      module: vmware_maintenancemode
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      validate_certs: False
+      esxi_hostname: "{{esxi_host}}"
+      evacuate: yes
+      state: absent

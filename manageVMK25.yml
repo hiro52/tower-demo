@@ -1,0 +1,55 @@
+# This Playbook requires Ansible 2.5 or later, would not work with 2.4.x
+#
+- name: Manage VMKernel Port
+  hosts: all
+#  gather_facts: no
+  tasks:
+  - name: Portgroup Create
+    vmware_portgroup:
+      hosts: "{{esxi_host}}"
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      portgroup_name: "{{pg_name}}"
+      state: "{{vmk_state}}"
+      switch_name: "{{vss_name}}"
+      validate_certs: no
+      vlan_id: 0
+    delegate_to: localhost
+    when: vmk_state == "present"
+
+  - name: vmkernel Config
+    vmware_vmkernel:
+      esxi_hostname: "{{esxi_host}}"
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      validate_certs: no
+      vswitch_name: "{{vss_name}}"
+      state: "{{vmk_state}}"
+      portgroup_name: "{{pg_name}}"
+      device: vmk1
+#      vlan_id: "{{vlan_id}}"
+      network:
+        type: 'static'
+        ip_address: "{{ip_address}}"
+        subnet_mask: "{{subnet}}"
+      enable_vmotion: "{{vmotion}}"
+      enable_ft: no
+      enable_mgmt: no
+      enable_vsan: no
+    delegate_to: localhost
+
+  - name: Portgroup Delete
+    vmware_portgroup:
+      hosts: "{{esxi_host}}"
+      hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+      username: "{{lookup('env', 'VMWARE_USER')}}"
+      password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+      portgroup_name: "{{pg_name}}"
+      state: "{{vmk_state}}"
+      switch_name: "{{vss_name}}"
+      validate_certs: no
+      vlan_id: 0
+    when: vmk_state == "absent"
+
