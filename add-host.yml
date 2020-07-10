@@ -1,3 +1,4 @@
+---
 - name: Add or Remove ESXi host to/from vCenterServer
   hosts: all
 #  gather_facts: no
