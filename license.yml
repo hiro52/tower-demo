@@ -1,0 +1,14 @@
+- name: Add or Remove ESXi host to/from vCenterServer
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Manage ESXi Lisence
+      vcenter_license:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        esxi_hostname: "{{esxi_host}}"
+        license: xxxxx-xxxxx-xxxxx-xxxxx-xxxxx
+        state: present
+      delegate_to: localhost
