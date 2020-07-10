@@ -22,8 +22,7 @@
       hostname: "{{lookup('env', 'VMWARE_HOST')}}"
       username: "{{lookup('env', 'VMWARE_USER')}}"
       password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
-      datastore_name: NFS
-#      datastore_name: "{{nfs_name}}"
+      datastore_name: "{{nfs_name}}"
       datastore_type: nfs
       nfs_path: "{{nfs_path}}"
       nfs_server: "{{nfs_server}}"
