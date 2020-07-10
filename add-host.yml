@@ -16,12 +16,12 @@
         state: "{{esxi_state}}"
       delegate_to: localhost
     - name: Manage Maintenance Mode
-      local_action:
-        module: vmware_maintenancemode
+      vmware_maintenancemode:
         validate_certs: False
         hostname: "{{lookup('env', 'VMWARE_HOST')}}"
         username: "{{lookup('env', 'VMWARE_USER')}}"
         password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
         esxi_hostname: "{{esxi_host}}"
         state: absent
+      delegate_to: localhost
       when: esxi_state == "present"
