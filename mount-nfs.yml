@@ -6,8 +6,7 @@
 #  gather_facts: no
   tasks:
   - name: Manage Maintenance Mode
-    local_action:
-      module: vmware_maintenancemode
+    vmware_maintenancemode:
       hostname: "{{lookup('env', 'VMWARE_HOST')}}"
       username: "{{lookup('env', 'VMWARE_USER')}}"
       password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
@@ -15,6 +14,7 @@
       esxi_hostname: "{{esxi_host}}"
       evacuate: yes
       state: present
+    delegate_to: localhost
     when: nfs_state == "absent"
   - name: Manage NFS Datastore
     vmware_host_datastore:
@@ -31,8 +31,7 @@
       validate_certs: no
     delegate_to: localhost
   - name: Manage Maintenance Mode
-    local_action:
-      module: vmware_maintenancemode
+    vmware_maintenancemode:
       hostname: "{{lookup('env', 'VMWARE_HOST')}}"
       username: "{{lookup('env', 'VMWARE_USER')}}"
       password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
@@ -40,3 +39,4 @@
       esxi_hostname: "{{esxi_host}}"
       evacuate: yes
       state: absent
+    delegate_to: localhost
