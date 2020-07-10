@@ -1,5 +1,5 @@
 ---
-- name: Config check with vMotion
+- name: Config check by vMotion
   hosts: all
   gather_facts: no
   tasks:
