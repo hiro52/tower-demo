@@ -19,8 +19,6 @@
       state: poweredon
       datastore: NFS
       validate_certs: no
-      customization:
-        dns_servers: 192.168.21.11 
     with_sequence: count={{number|int - 1}}
 
   - name: Clone the Template with wait for customization
@@ -39,7 +37,5 @@
       state: poweredon
       datastore: NFS
       validate_certs: no
-      customization:
-        dns_servers: 192.168.21.11 
       wait_for_ip_address: yes
 #      wait_for_customization: yes
