@@ -1,0 +1,15 @@
+---
+- name: vSphere vmkernel Information
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Show vmkernel Information
+      vmware_vmkernel_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        esxi_hostname: "{{ esxi_host }}"
+      register: vmk_facts
+    - debug:
+        var: vmk_facts
