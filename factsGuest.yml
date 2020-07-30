@@ -1,0 +1,17 @@
+---
+- name: Get VM Information
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Show VM Infotmation
+      vmware_guest_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        datacenter: DC
+        tags: yes
+        name: Webserver-1
+      register: vm_facts
+    - debug:
+        var: vm_facts
