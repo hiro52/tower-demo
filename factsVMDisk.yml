@@ -1,0 +1,16 @@
+---
+- name: VM Disk Information
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Show VM Disk Information
+      vmware_guest_disk_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        datacenter: DC
+        name: Webserver-1
+      register: vmdisk_facts
+    - debug:
+        var: vmdisk_facts
