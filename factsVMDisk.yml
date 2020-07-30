@@ -10,7 +10,7 @@
         password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
         validate_certs: False
         datacenter: DC
-        name: Webserver-1
+        name: "{{vm_name}}"
       register: vmdisk_facts
     - debug:
         var: vmdisk_facts
