@@ -1,0 +1,16 @@
+---
+- name: ESXi Port Group Infomation
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Show vss facts
+      vmware_portgroup_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        esxi_hostname: "{{ esxi_host }}"
+      delegate_to: localhost
+      register: pg_facts
+    - debug:
+        var: pg_facts
