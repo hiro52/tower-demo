@@ -1,0 +1,15 @@
+---
+- name: vCenter Cluster Information
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Show VM Tag
+      vmware_cluster_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        cluster_name: CL
+      register: cl_facts
+    - debug:
+        var: cl_facts
