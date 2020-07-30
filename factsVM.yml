@@ -1,0 +1,16 @@
+---
+- name: All vCenter Managed VMs Information
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Show VMs Information
+      vmware_vm_info:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        show_attribute: yes
+        show_tag: yes
+      register: vm_facts
+    - debug:
+        var: vm_facts.virtual_machines
