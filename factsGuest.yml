@@ -11,7 +11,7 @@
         validate_certs: False
         datacenter: DC
         tags: yes
-        name: Webserver-1
+        name: "{{vm_name}}"
       register: vm_facts
     - debug:
         var: vm_facts
