@@ -1,9 +1,9 @@
 ---
-- name: Get VM Tag
+- name: Get VM Tag & httpd install & Firewall (80/443) config
   hosts: all
   gather_facts: yes
   tasks:
-    - name: Show VM Tag
+    - name: Confirm VM Tag & Register to variable
       vmware_guest_info:
         hostname: "{{lookup('env', 'VMWARE_HOST')}}"
         username: "{{lookup('env', 'VMWARE_USER')}}"
@@ -15,27 +15,27 @@
       register: vm_facts
       delegate_to: localhost
 
-    - name: httpd install & Firewall (80/443) config
-      yum: 
+    - name: httpd install
+      yum:
         name: httpd
         state: latest
       when: vm_facts.instance.tags == ["New_VM"]
 
     - name: httpd running & Enabled
-      service: 
+      service:
         name: httpd
         state: started
         enabled: yes
       when: vm_facts.instance.tags == ["New_VM"]
 
-    - name: Firewall Setting 80
+    - name: Firewall Setting 80/443
       firewalld:
         service: "{{item}}"
-        zone: public 
+        zone: public
         state: enabled
-        permanent: true 
+        permanent: true
         immediate: true
       with_items:
         - http
-        - https 
+        - https
       when: vm_facts.instance.tags == ["New_VM"]
