@@ -1,0 +1,16 @@
+---
+- name: Tag Control for VM
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Manage VM Tag
+      vmware_tag_manager:
+        hostname: "{{lookup('env', 'VMWARE_HOST')}}"
+        username: "{{lookup('env', 'VMWARE_USER')}}"
+        password: "{{lookup('env', 'VMWARE_PASSWORD')}}"
+        validate_certs: False
+        tag_names: New_VM
+        object_name: "{{vmname}}{{item}}"
+        object_type: VirtualMachine
+        state: "{{tag_state}}"
+      with_sequence: count={{number}}
