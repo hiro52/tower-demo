@@ -1,0 +1,14 @@
+---
+- name: vSphere datacenter Manage
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Export AAC Object
+      export:
+        controller_host: "{{lookup('env', 'CONTROLLER_HOST')}}"
+        controller_username: "{{lookup('env', 'CONTROLLER_USERNAME')}}"
+        controller_password: "{{lookup('env', 'CONTROLLER_PASSWORD')}}"
+#        controller_host: 
+#        controller_username: admin
+#        controller_password: 
+        all: True
