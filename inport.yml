@@ -12,7 +12,7 @@
         controller_username: "admin"
         controller_password: "25o4n68m"
         validate_certs: false
-        all: True
+        inventory: 'all'
       register: export_output
       
     - name: Inport AAC Object
