@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: Export AAC Object
-      export:
+      ansible.controller.export:
 #        controller_host: "{{lookup('env', 'CONTROLLER_HOST')}}"
 #        controller_username: "{{lookup('env', 'CONTROLLER_USERNAME')}}"
 #        controller_password: "{{lookup('env', 'CONTROLLER_PASSWORD')}}"
@@ -15,7 +15,7 @@
       register: export_output
       
     - name: Inport AAC Object
-      import:
+      ansible.controller.import:
 #        controller_host: "{{lookup('env', 'CONTROLLER_HOST')}}"
 #        controller_username: "{{lookup('env', 'CONTROLLER_USERNAME')}}"
 #        controller_password: "{{lookup('env', 'CONTROLLER_PASSWORD')}}"
