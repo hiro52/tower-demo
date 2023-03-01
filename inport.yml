@@ -1,6 +1,6 @@
 ---
 - name: Move Object between AACs
-  hosts: control
+  hosts: all
   gather_facts: no
   tasks:
     - name: Export AAC Object
