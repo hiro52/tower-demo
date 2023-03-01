@@ -8,7 +8,7 @@
 #        controller_host: "{{lookup('env', 'CONTROLLER_HOST')}}"
 #        controller_username: "{{lookup('env', 'CONTROLLER_USERNAME')}}"
 #        controller_password: "{{lookup('env', 'CONTROLLER_PASSWORD')}}"
-        controller_host: "student1.7w6qg.example.opentlc.com"
+#controller_host: "student1.7w6qg.example.opentlc.com"
         controller_username: "admin"
         controller_password: "25o4n68m"
         validate_certs: false
