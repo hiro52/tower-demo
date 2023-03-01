@@ -1,6 +1,6 @@
 ---
 - name: Move Object between AACs
-  hosts: all
+  hosts: 3.145.153.46
   gather_facts: no
   tasks:
     - name: Export AAC Object
