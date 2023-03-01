@@ -11,6 +11,7 @@
         controller_host: "student1.7w6qg.example.opentlc.com"
         controller_username: "admin"
         controller_password: "25o4n68m"
+        validate_certs: false
         all: True
       register: export_output
       
@@ -22,4 +23,5 @@
         controller_host: "student2.7w6qg.example.opentlc.com"
         controller_username: "admin"
         controller_password: "25o4n68m"
+        validate_certs: false
         assets: "{{ export_output.assets }}"
