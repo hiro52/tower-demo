@@ -1,0 +1,17 @@
+  - name: Clone the Template with wait for customization
+    vmware_guest:
+      hostname: "{{vc_host}}"
+      username: "{{vc_user}}"
+      password: "{{vc_password')}}"
+      datacenter: SDDC-Datacenter
+      cluster: Cluster-1
+      name: "{{vmname}}{{number}}"
+      folder: "/SDDC-Datacenter/Wokloads/sandbox-{{guid}}"
+      template: rhel86-tpl
+      networks:
+      - name: "segment-sandbox-{{guid}}"
+        type: dhcp
+      state: poweredon
+      datastore: WorkloadDatastore
+      validate_certs: no
+      wait_for_ip_address: yes
